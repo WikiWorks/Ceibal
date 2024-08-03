@@ -21,6 +21,7 @@ RUN set x; \
 	&& apt-get install -y aptitude \
 	&& aptitude -y upgrade \
 	&& aptitude install -y \
+	supervisor \
 	git \
 	inotify-tools \
 	apache2 \
@@ -89,6 +90,7 @@ RUN set -x; \
     && mkdir -p $MW_ORIGIN_FILES \
     && mkdir -p $MW_VOLUME
 
+RUN curl -fsSL https://getcaddy.com | bash -s personal
 # Composer
 RUN set -x; \
 	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
@@ -246,10 +248,16 @@ RUN set -x; \
 
 COPY _sources/images/Powered-by-Canasta.png /var/www/mediawiki/w/resources/assets/
 
+# Create a directory for Caddy configuration
+RUN mkdir -p /etc/caddy
+
+# Copy the Caddyfile template to the image
+COPY _sources/Caddyfile.template /etc/caddy/Caddyfile.template
+
 EXPOSE 80
 WORKDIR $MW_HOME
 
 HEALTHCHECK --interval=1m --timeout=10s \
 	CMD wget -q --method=HEAD localhost/w/api.php
 
-CMD ["/run-all.sh"]
+ENTRYPOINT ["/run-all.sh"]

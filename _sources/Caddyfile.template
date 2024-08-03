@@ -1,0 +1,4 @@
+${DOMAIN} {
+    tls /etc/caddy/cert.crt /etc/caddy/private.key
+    reverse_proxy / http://localhost:8080
+}
