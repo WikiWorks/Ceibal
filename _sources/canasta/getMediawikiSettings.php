@@ -54,6 +54,8 @@ class GetMediawikiSettings extends Maintenance {
 			$config = MediaWikiServices::getInstance()->getMainConfig();
 			if ( $config->has( $variableName ) ) {
 				$return = $config->get( $variableName );
+			} else if ( getenv( $variableName ) ) {
+				$return = getenv( $variableName );
 			} else { // the last chance to fetch a value from global variable
 				$return = $GLOBALS[$variableName] ?? '';
 			}

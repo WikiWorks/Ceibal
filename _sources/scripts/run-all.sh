@@ -99,23 +99,7 @@ cd "$MW_HOME" || exit
 
 ########## Run maintenance scripts ##########
 echo "Checking for LocalSettings..."
-if [ -e "$MW_VOLUME/config/LocalSettings.php" ]; then
-  settingsPath="$MW_VOLUME/config/LocalSettings.php"
-elif [ -e "$MW_VOLUME/config/CommonSettings.php" ]; then
-  settingsPath="$MW_VOLUME/config/CommonSettings.php"
-fi
-
-if [ -e $settingsPath ]; then
-  if ! grep -q "\$wgDBtype" "$settingsPath"; then
-    echo "\$wgDBtype = \"$wgDBtype\";" >> $settingsPath
-  if ! grep -q "\$wgDBserver" "$settingsPath"; then
-    echo "\$wgDBserver = \"$wgDBserver\";" >> $settingsPath
-  if ! grep -q "\$wgDBname" "$settingsPath"; then
-    echo "\$wgDBname = \"$wgDBname\";" >> $settingsPath
-  if ! grep -q "\$wgDBuser" "$settingsPath"; then
-    echo "\$wgDBuser = \"$wgDBuser\";" >> $settingsPath
-  if ! grep -q "\$wgDBpassword" "$settingsPath"; then
-    echo "\$wgDBpassword = \"$wgDBpassword\";" >> $settingsPath
+if [ -e "$MW_VOLUME/config/LocalSettings.php" ] || [ -e "$MW_VOLUME/config/CommonSettings.php" ]; then
   # Run auto-update
   run_autoupdate
   if [ -e "$MW_VOLUME/config/wikis.yaml" ]; then
@@ -123,7 +107,6 @@ if [ -e $settingsPath ]; then
     create_storage_dirs
   fi
 fi
-
 echo "Starting services..."
 
 # Run maintenance scripts in background.
@@ -158,10 +141,6 @@ exec /usr/sbin/apachectl -DFOREGROUND
 
 # Replace placeholders in the Caddyfile template with actual values
 sed -e "s/\${DOMAIN}/$DOMAIN/g" /etc/caddy/Caddyfile.template > /etc/caddy/Caddyfile
-
-# Copy provided certificate and key
-cp "$CERT_PATH" /etc/caddy/cert.crt
-cp "$KEY_PATH" /etc/caddy/private.key
 
 # Start Caddy in the foreground
 caddy run --config /etc/caddy/Caddyfile
