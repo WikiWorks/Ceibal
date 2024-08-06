@@ -43,4 +43,4 @@ Luego, los volúmenes (directorios persistentes) definidos de la imagen de Docke
 - `config` - el directorio que contiene los archivos de configuración para esta imagen de Canasta
 
 Finalmente, el nombre de la imagen de Docker que se va a instalar:
-- `modified-canasta`
+- `ceibal`
