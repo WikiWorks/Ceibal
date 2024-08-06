@@ -4,7 +4,7 @@ A full-featured MediaWiki stack for easy deployment of enterprise-ready MediaWik
 This repo is for the MediaWiki application Docker image included in the Canasta stack. For complete documentation on the overall Canasta tech stack, including installation instructions, please visit https://github.com/CanastaWiki/Canasta-Documentation.
 
 ## Instrucciones de iniciar
-Aquí hay una llamada de muestra a "docker run" para iniciar Canasta:
+Aquí hay un conjunto de llamadas de muestra (ejecutadas en orden) para extraer e iniciar Canasta:
 ```
 sudo docker pull ninjaneered/ceibal
 ```
