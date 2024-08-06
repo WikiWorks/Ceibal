@@ -5,6 +5,9 @@ This repo is for the MediaWiki application Docker image included in the Canasta 
 
 ## Instrucciones de iniciar
 Aquí hay una llamada de muestra a "docker run" para iniciar Canasta:
+```
+sudo docker pull ninjaneered/ceibal
+```
 
 ```
 sudo docker run
