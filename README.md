@@ -24,7 +24,7 @@ sudo docker run
 -v ../cert.crt:/etc/caddy/cert.crt
 -v ../private.key:/etc/caddy/private.key
 -v ./config:/mediawiki/config
-modified-canasta
+ceibal
 ```
 
 Y aquí hay una explicación de todas las opciones enumeradas.
