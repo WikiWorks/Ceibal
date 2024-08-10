@@ -110,7 +110,7 @@ if ( $key === null ) {
 }
 
 // Get the configuration for the selected wiki
-$selectedWikiConfig = $wikiIdToConfigMap[$wikiID] ?? null;
+$selectedWikiConfig = $wikiIdToConfigMap[$wikiID] ? $wikiIdToConfigMap[$wikiID] : null;
 
 // Check if a matching configuration was found. If so, configure the wiki database, else terminate execution
 if ( !empty( $selectedWikiConfig ) ) {

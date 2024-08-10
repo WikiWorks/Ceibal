@@ -39,7 +39,7 @@ if ( !is_readable( $canastaLocalSettingsFilePath ) && !is_readable( $canastaComm
 
 // Canasta default settings below
 
-$wgServer = getenv( 'MW_SITE_SERVER' ) ?? 'http://localhost';
+$wgServer = getenv( 'MW_SITE_SERVER' ) ? getenv( 'MW_SITE_SERVER' ) : 'http://localhost';
 
 ## The URL base path to the directory containing the wiki;
 ## defaults for all runtime URL paths are based off of this.
@@ -78,7 +78,7 @@ $wgCdnServersNoPurge[] = '192.168.0.0/16'; // 192.168.0.0 – 192.168.255.255
  * @param $value
  * @return bool
  */
-function isEnvTrue( $name ): bool {
+function isEnvTrue( $name ) {
 	$value = getenv( $name );
 	switch ( $value ) {
 		case "True":

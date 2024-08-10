@@ -3,8 +3,8 @@ FROM debian:11.7 AS base
 LABEL maintainers=""
 LABEL org.opencontainers.image.source=https://github.com/CanastaWiki/Canasta
 
-ENV MW_VERSION=REL1_39 \
-	MW_CORE_VERSION=1.39.8 \
+ENV MW_VERSION=REL1_28 \
+	MW_CORE_VERSION=1.28.3 \
 	WWW_ROOT=/var/www/mediawiki \
 	MW_HOME=/var/www/mediawiki/w \
 	MW_LOG=/var/log/mediawiki \
@@ -52,21 +52,21 @@ RUN set x; \
 	&& echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list \
 	&& aptitude update \
 	&& aptitude install -y \
-	php8.1 \
-	php8.1-mysql \
-	php8.1-cli \
-	php8.1-gd \
-	php8.1-mbstring \
-	php8.1-xml \
-	php8.1-mysql \
-	php8.1-intl \
-	php8.1-opcache \
-	php8.1-apcu \
-	php8.1-redis \
-	php8.1-curl \
-	php8.1-zip \
-	php8.1-fpm \
-	php8.1-yaml \
+	php5.6 \
+	php5.6-mysql \
+	php5.6-cli \
+	php5.6-gd \
+	php5.6-mbstring \
+	php5.6-xml \
+	php5.6-mysql \
+	php5.6-intl \
+	php5.6-opcache \
+	php5.6-apcu \
+	php5.6-redis \
+	php5.6-curl \
+	php5.6-zip \
+	php5.6-fpm \
+	php5.6-yaml \
 	libapache2-mod-fcgid \
 	&& aptitude clean \
 	&& rm -rf /var/lib/apt/lists/*
@@ -81,7 +81,7 @@ RUN set -x; \
     && a2enmod rewrite \
 	# enabling mpm_event and php-fpm
 	&& a2dismod mpm_prefork \
-	&& a2enconf php8.1-fpm \
+	&& a2enconf php5.6-fpm \
 	&& a2enmod mpm_event \
 	&& a2enmod proxy_fcgi \
     # Create directories
@@ -94,7 +94,7 @@ RUN curl -fsSL https://getcaddy.com | bash -s personal
 # Composer
 RUN set -x; \
 	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer self-update 2.1.3
+    && composer self-update 1.10.27
 
 FROM base AS source
 
@@ -209,11 +209,11 @@ ENV MW_AUTOUPDATE=true \
 COPY _sources/configs/msmtprc /etc/
 COPY _sources/configs/mediawiki.conf /etc/apache2/sites-enabled/
 COPY _sources/configs/status.conf /etc/apache2/mods-available/
-COPY _sources/configs/php_error_reporting.ini _sources/configs/php_upload_max_filesize.ini /etc/php/8.1/cli/conf.d/
-COPY _sources/configs/php_error_reporting.ini _sources/configs/php_upload_max_filesize.ini /etc/php/8.1/fpm/conf.d/
-COPY _sources/configs/php_max_input_vars.ini _sources/configs/php_max_input_vars.ini /etc/php/8.1/fpm/conf.d/
-COPY _sources/configs/php_timeouts.ini /etc/php/8.1/fpm/conf.d/
-COPY _sources/configs/php-fpm-www.conf /etc/php/8.1/fpm/pool.d/www.conf
+COPY _sources/configs/php_error_reporting.ini _sources/configs/php_upload_max_filesize.ini /etc/php/5.6/cli/conf.d/
+COPY _sources/configs/php_error_reporting.ini _sources/configs/php_upload_max_filesize.ini /etc/php/5.6/fpm/conf.d/
+COPY _sources/configs/php_max_input_vars.ini _sources/configs/php_max_input_vars.ini /etc/php/5.6/fpm/conf.d/
+COPY _sources/configs/php_timeouts.ini /etc/php/5.6/fpm/conf.d/
+COPY _sources/configs/php-fpm-www.conf /etc/php/5.6/fpm/pool.d/www.conf
 COPY _sources/scripts/*.sh /
 COPY _sources/scripts/maintenance-scripts/*.sh /maintenance-scripts/
 COPY _sources/scripts/*.php $MW_HOME/maintenance/
@@ -244,7 +244,7 @@ RUN set -x; \
 	&& a2enmod expires remoteip\
 	&& a2disconf other-vhosts-access-log \
 	# Enable environment variables for FPM workers
-	&& sed -i '/clear_env/s/^;//' /etc/php/8.1/fpm/pool.d/www.conf
+	&& sed -i '/clear_env/s/^;//' /etc/php/5.6/fpm/pool.d/www.conf
 
 COPY _sources/images/Powered-by-Canasta.png /var/www/mediawiki/w/resources/assets/
 
@@ -253,6 +253,9 @@ RUN mkdir -p /etc/caddy
 
 # Copy the Caddyfile template to the image
 COPY _sources/Caddyfile.template /etc/caddy/Caddyfile.template
+
+COPY extensions/ /var/www/mediawiki/w/user-extensions
+COPY skins/ /var/www/mediawiki/w/user-skins
 
 EXPOSE 80
 WORKDIR $MW_HOME

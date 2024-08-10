@@ -15,10 +15,10 @@ foreach ($yamlData[$type] as $obj) {
     $name = key($obj);
     $data = $obj[$name];
     
-    $repository = $data['repository'] ?? null;
-    $commit = $data['commit'] ?? null;
-    $branch = $data['branch'] ?? null;
-    $patches = $data['patches'] ?? null;
+    $repository = $data['repository'] ? $data['repository'] : null;
+    $commit = $data['commit'] ? $data['commit'] : null;
+    $branch = $data['branch'] ? $data['branch'] : null;
+    $patches = $data['patches'] ? $data['patches'] : null;
     
     $gitCloneCmd = "git clone ";
     

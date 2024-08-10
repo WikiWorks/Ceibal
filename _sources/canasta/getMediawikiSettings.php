@@ -57,7 +57,7 @@ class GetMediawikiSettings extends Maintenance {
 			} else if ( getenv( $variableName ) ) {
 				$return = getenv( $variableName );
 			} else { // the last chance to fetch a value from global variable
-				$return = $GLOBALS[$variableName] ?? '';
+				$return = $GLOBALS[$variableName] ? $GLOBALS[$variableName] : '';
 			}
 		} elseif ( $this->hasOption( 'versions' ) ) {
 			$return = [
@@ -65,7 +65,7 @@ class GetMediawikiSettings extends Maintenance {
 			];
 			$extThings = self::getExtensionsThings();
 			foreach ( $extThings as $name => $extension ) {
-				$return[$name] = $extension['version'] ?? '';
+				$return[$name] = $extension['version'] ? $extension['version'] : '';
 				// Try to add git version
 				if ( isset( $extension['path'] ) ) {
 					$extensionPath = dirname( $extension['path'] );
@@ -87,7 +87,7 @@ class GetMediawikiSettings extends Maintenance {
 			if ( isset( $extThings['SemanticMediaWiki'] ) ) {
 				SemanticMediaWiki::onExtensionFunction();
 				$smwId = SMW\Site::id();
-				$return = $GLOBALS['smw.json'][$smwId]['upgrade_key'] ?? '';
+				$return = $GLOBALS['smw.json'][$smwId]['upgrade_key'] ? $GLOBALS['smw.json'][$smwId]['upgrade_key'] : '';
 			}
 		} elseif ( $this->hasOption( 'SWMIncompleteSetupTasks' ) ) {
 			$extThings = self::getExtensionsThings();
