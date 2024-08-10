@@ -18,8 +18,6 @@ sudo docker run
 -e wgDBname=canastatest
 -e wgDBuser=canastauser
 -e wgDBpassword=password
--v ../extensions:/var/www/mediawiki/w/user-extensions
--v ../skins:/var/www/mediawiki/w/user-skins
 -v ./images:/mediawiki/images
 -v ../cert.crt:/etc/caddy/cert.crt
 -v ../private.key:/etc/caddy/private.key
@@ -35,8 +33,6 @@ Primero, las variables de entorno, configuradas con el indicador "-e":
 - `wgDBtype`, `wgDBserver`, `wgDBname`, `wgDBuser`, `wgDBpassword` - estas son variables estándar de MediaWiki, que juntas se utilizan para conectarse a la base de datos que contiene los datos de la wiki
 
 Luego, los volúmenes (directorios persistentes) definidos de la imagen de Docker, configurados con el indicador "-v":
-- `extensions` - el directorio utilizado para almacenar todas las extensiones personalizadas (no de Canasta) que se han instalado
-- `skin` - el directorio utilizado para almacenar todas las "skins" (apariencias) personalizadas (no de Canasta) que se han instalado
 - `images` - el directorio images/ estándar de MediaWiki, utilizado para almacenar imágenes y otros archivos cargados
 - `cert.crt` - el archivo que contiene el certificado para el cifrado SSL
 - `private.key` -  el archivo que contiene la clave privada para el cifrado SSL
