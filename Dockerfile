@@ -254,6 +254,9 @@ RUN mkdir -p /etc/caddy
 # Copy the Caddyfile template to the image
 COPY _sources/Caddyfile.template /etc/caddy/Caddyfile.template
 
+COPY extensions/ /var/www/mediawiki/w/user-extensions
+COPY skins/ /var/www/mediawiki/w/user-skins
+
 EXPOSE 80
 WORKDIR $MW_HOME
 
