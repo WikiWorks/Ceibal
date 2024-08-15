@@ -11,32 +11,28 @@ sudo docker pull ninjaneered/ceibal
 
 ```
 sudo docker run
--e MW_ALLOW_UNMOUNTED_VOLUME=1
 -e DOMAIN=domain.com
 -e wgDBtype="mysql"
 -e wgDBserver=localhost
 -e wgDBname=canastatest
 -e wgDBuser=canastauser
 -e wgDBpassword=password
--v ./images:/mediawiki/images
+-v ./mediawiki:/mediawiki
 -v ../cert.crt:/etc/caddy/cert.crt
 -v ../private.key:/etc/caddy/private.key
--v ./config:/mediawiki/config
 ceibal
 ```
 
 Y aquí hay una explicación de todas las opciones enumeradas.
 
 Primero, las variables de entorno, configuradas con el indicador "-e":
-- `MW_ALLOW_UNMOUNTED_VOLUME` - si se configura en 1, ignora los problemas con los volúmenes desmontados, en lugar de cancelar la instalación (necesario, por ahora)
 - `DOMAIN` - configura el dominio de la URL de esta wiki
 - `wgDBtype`, `wgDBserver`, `wgDBname`, `wgDBuser`, `wgDBpassword` - estas son variables estándar de MediaWiki, que juntas se utilizan para conectarse a la base de datos que contiene los datos de la wiki
 
 Luego, los volúmenes (directorios persistentes) definidos de la imagen de Docker, configurados con el indicador "-v":
-- `images` - el directorio images/ estándar de MediaWiki, utilizado para almacenar imágenes y otros archivos cargados
+- `mediawiki` - el directorio estándar de MediaWiki, utilizado para almacenar LocalSettings.php, imágenes, configuraciones y otros archivos cargados
 - `cert.crt` - el archivo que contiene el certificado para el cifrado SSL
 - `private.key` -  el archivo que contiene la clave privada para el cifrado SSL
-- `config` - el directorio que contiene los archivos de configuración para esta imagen de Canasta
 
 Finalmente, el nombre de la imagen de Docker que se va a instalar:
 - `ceibal`
