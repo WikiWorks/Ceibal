@@ -7,11 +7,11 @@ name: Docker
 
 on:
   push:
-    branches: [ "master", "REL1_28", "REL1_35" ]
+    branches: [ "master", "REL1_28", "REL1_35", "master_NP", "REL1_28_NP", "REL1_35_NP" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
-    branches: [ "master", "REL1_28", "REL1_35" ]
+    branches: [ "master", "REL1_28", "REL1_35", "master_NP", "REL1_28_NP", "REL1_35_NP" ]
 
 env:
   # Use docker.io for Docker Hub if empty
