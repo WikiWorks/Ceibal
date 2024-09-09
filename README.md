@@ -11,22 +11,18 @@ sudo docker pull ninjaneered/ceibal
 
 ```
 sudo docker run
--e DOMAIN=domain.com
 -e wgDBtype="mysql"
 -e wgDBserver=localhost
 -e wgDBname=canastatest
 -e wgDBuser=canastauser
 -e wgDBpassword=password
 -v ./mediawiki:/mediawiki
--v ../cert.crt:/etc/caddy/cert.crt
--v ../private.key:/etc/caddy/private.key
 ceibal
 ```
 
 Y aquí hay una explicación de todas las opciones enumeradas.
 
 Primero, las variables de entorno, configuradas con el indicador "-e":
-- `DOMAIN` - configura el dominio de la URL de esta wiki
 - `wgDBtype`, `wgDBserver`, `wgDBname`, `wgDBuser`, `wgDBpassword` - estas son variables estándar de MediaWiki, que juntas se utilizan para conectarse a la base de datos que contiene los datos de la wiki
 
 Luego, los volúmenes (directorios persistentes) definidos de la imagen de Docker, configurados con el indicador "-v":

@@ -138,9 +138,3 @@ make_dir_writable "$MW_VOLUME" -not '(' -path "$MW_VOLUME/images" -prune ')'
 rm -rf /run/apache2/* /tmp/apache2*
 
 exec /usr/sbin/apachectl -DFOREGROUND
-
-# Replace placeholders in the Caddyfile template with actual values
-sed -e "s/\${DOMAIN}/$DOMAIN/g" /etc/caddy/Caddyfile.template > /etc/caddy/Caddyfile
-
-# Start Caddy in the foreground
-caddy run --config /etc/caddy/Caddyfile
