@@ -90,7 +90,6 @@ RUN set -x; \
     && mkdir -p $MW_ORIGIN_FILES \
     && mkdir -p $MW_VOLUME
 
-RUN curl -fsSL https://getcaddy.com | bash -s personal
 # Composer
 RUN set -x; \
 	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
@@ -247,12 +246,6 @@ RUN set -x; \
 	&& sed -i '/clear_env/s/^;//' /etc/php/7.4/fpm/pool.d/www.conf
 
 COPY _sources/images/Powered-by-Canasta.png /var/www/mediawiki/w/resources/assets/
-
-# Create a directory for Caddy configuration
-RUN mkdir -p /etc/caddy
-
-# Copy the Caddyfile template to the image
-COPY _sources/Caddyfile.template /etc/caddy/Caddyfile.template
 
 COPY extensions/ /var/www/mediawiki/w/user-extensions
 COPY skins/ /var/www/mediawiki/w/user-skins
